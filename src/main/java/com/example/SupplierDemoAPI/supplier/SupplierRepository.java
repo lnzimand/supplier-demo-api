@@ -16,7 +16,7 @@ public class SupplierRepository {
     }
 
     public void addNewSupplier(Supplier supplier) {
-        Supplier supplierByCompanyName = getSupplierByCompanyName(supplier.getCompanyName());
+        Supplier supplierByCompanyName = getSupplierByCompanyName(supplier.getCompanyDetails().getCompanyName());
 
         if (supplierByCompanyName != null) {
             throw new IllegalStateException(
@@ -30,8 +30,8 @@ public class SupplierRepository {
         if (!database.isEmpty()) {
             for (Supplier supplier:
                     database) {
-                if (supplier.getCompanyName() != null)
-                    if (supplier.getCompanyName().equalsIgnoreCase(companyName))
+                if (supplier.getCompanyDetails().getCompanyName() != null)
+                    if (supplier.getCompanyDetails().getCompanyName().equalsIgnoreCase(companyName))
                         return supplier;
             }
         }
@@ -42,8 +42,8 @@ public class SupplierRepository {
         if (!database.isEmpty() && supplierExistsByCompanyName(companyName)) {
             for (Supplier supplier :
                     database) {
-                if (supplier.getCompanyName() != null)
-                    if (supplier.getCompanyName().equalsIgnoreCase(companyName)) {
+                if (supplier.getCompanyDetails().getCompanyName() != null)
+                    if (supplier.getCompanyDetails().getCompanyName().equalsIgnoreCase(companyName)) {
                         database.remove(supplier);
                         break;
                     }
@@ -57,36 +57,44 @@ public class SupplierRepository {
         if (!database.isEmpty()) {
             for (Supplier supplier :
                     database) {
-                if (supplier.getCompanyName() != null)
-                    if (supplier.getCompanyName().equalsIgnoreCase(companyName))
+                if (supplier.getCompanyDetails().getCompanyName() != null)
+                    if (supplier.getCompanyDetails().getCompanyName().equalsIgnoreCase(companyName))
                         return true;
             }
         }
         return false;
     }
 
-    public void updateSupplier(String companyName, String name, String surname, String address, String product, String email, Long contactNumber, Long price, Long quantity) {
+    public void updateSupplier(String companyName, String name, String surname, String bankName, String bankHolderName, Long branchCode, Long accountNumber, String address, String product, String email, Long contactNumber, Long price, Long quantity) {
         if (!database.isEmpty() && supplierExistsByCompanyName(companyName)) {
             for (Supplier supplier :
                     database) {
-                if (supplier.getCompanyName() != null)
-                    if (supplier.getCompanyName().equalsIgnoreCase(companyName)) {
+                if (supplier.getCompanyDetails().getCompanyName() != null)
+                    if (supplier.getCompanyDetails().getCompanyName().equalsIgnoreCase(companyName)) {
                         if (name != null && name.length() > 0 && !Objects.equals(supplier.getName(), name))
                             supplier.setName(name);
                         if (surname != null && surname.length() > 0 && !Objects.equals(supplier.getSurname(), surname))
                             supplier.setSurname(surname);
-                        if (address != null && address.length() > 0 && !Objects.equals(supplier.getAddress(), address))
-                            supplier.setAddress(address);
-                        if (product != null && product.length() > 0 && !Objects.equals(supplier.getProduct(), product))
-                            supplier.setProduct(product);
-                        if (email != null && email.length() > 0 && !Objects.equals(supplier.getEmail(), email))
-                            supplier.setEmail(email);
-                        if (contactNumber != null && !Objects.equals(supplier.getContactNumber(), contactNumber))
-                            supplier.setContactNumber(contactNumber);
-                        if (price != null && !Objects.equals(supplier.getPrice(), price))
-                            supplier.setPrice(price);
-                        if (quantity != null && !Objects.equals(supplier.getQuantity(), quantity))
-                            supplier.setQuantity(quantity);
+                        if (bankName != null && bankName.length() > 0 && !Objects.equals(supplier.getBankDetails().getBankName(), bankName))
+                            supplier.getBankDetails().setBankName(bankName);
+                        if (bankHolderName != null && bankHolderName.length() > 0 && !Objects.equals(supplier.getBankDetails().getBankHolderName(), bankHolderName))
+                            supplier.getBankDetails().setBankHolderName(bankHolderName);
+                        if (branchCode != null && !Objects.equals(supplier.getBankDetails().getBranchCode(), branchCode))
+                            supplier.getBankDetails().setBranchCode(branchCode);
+                        if (accountNumber != null && !Objects.equals(supplier.getBankDetails().getAccountNumber(), accountNumber))
+                            supplier.getBankDetails().setAccountNumber(accountNumber);
+                        if (address != null && address.length() > 0 && !Objects.equals(supplier.getCompanyDetails().getAddress(), address))
+                            supplier.getCompanyDetails().setAddress(address);
+                        if (product != null && product.length() > 0 && !Objects.equals(supplier.getCompanyDetails().getProduct(), product))
+                            supplier.getCompanyDetails().setProduct(product);
+                        if (email != null && email.length() > 0 && !Objects.equals(supplier.getContactDetails().getEmail(), email))
+                            supplier.getContactDetails().setEmail(email);
+                        if (contactNumber != null && !Objects.equals(supplier.getContactDetails().getContactNumber(), contactNumber))
+                            supplier.getContactDetails().setContactNumber(contactNumber);
+                        if (price != null && !Objects.equals(supplier.getCompanyDetails().getPrice(), price))
+                            supplier.getCompanyDetails().setPrice(price);
+                        if (quantity != null && !Objects.equals(supplier.getCompanyDetails().getQuantity(), quantity))
+                            supplier.getCompanyDetails().setQuantity(quantity);
                     }
             }
         } else throw new IllegalStateException(
@@ -101,8 +109,8 @@ public class SupplierRepository {
         if (!database.isEmpty()) {
             for (Supplier supplier :
                     database) {
-                if (supplier.getCompanyName() != null)
-                    if (supplier.getCompanyName().equalsIgnoreCase(searchVariable))
+                if (supplier.getCompanyDetails().getCompanyName() != null)
+                    if (supplier.getCompanyDetails().getCompanyName().equalsIgnoreCase(searchVariable))
                         foundResults.add(supplier);
                 if (supplier.getName() != null)
                     if (supplier.getName().equalsIgnoreCase(searchVariable))
@@ -110,14 +118,20 @@ public class SupplierRepository {
                 if (supplier.getSurname() != null)
                     if (supplier.getSurname().equalsIgnoreCase(searchVariable))
                         foundResults.add(supplier);
-                if (supplier.getProduct() != null)
-                    if (supplier.getProduct().equalsIgnoreCase(searchVariable))
+                if (supplier.getCompanyDetails().getProduct() != null)
+                    if (supplier.getCompanyDetails().getProduct().equalsIgnoreCase(searchVariable))
                         foundResults.add(supplier);
-                if (supplier.getAddress() != null)
-                    if (supplier.getAddress().equalsIgnoreCase(searchVariable))
+                if (supplier.getCompanyDetails().getAddress() != null)
+                    if (supplier.getCompanyDetails().getAddress().equalsIgnoreCase(searchVariable))
                         foundResults.add(supplier);
-                if (supplier.getEmail() != null)
-                    if (supplier.getEmail().equalsIgnoreCase(searchVariable))
+                if (supplier.getContactDetails().getEmail() != null)
+                    if (supplier.getContactDetails().getEmail().equalsIgnoreCase(searchVariable))
+                        foundResults.add(supplier);
+                if (supplier.getBankDetails().getBankName() != null)
+                    if (supplier.getBankDetails().getBankName().equalsIgnoreCase(searchVariable))
+                        foundResults.add(supplier);
+                if (supplier.getBankDetails().getBankHolderName() != null)
+                    if (supplier.getBankDetails().getBankHolderName().equalsIgnoreCase(searchVariable))
                         foundResults.add(supplier);
             }
         }

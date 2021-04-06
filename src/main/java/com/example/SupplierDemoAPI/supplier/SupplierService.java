@@ -28,11 +28,29 @@ public class SupplierService {
         this.supplierRepository.deleteSupplier(companyName);
     }
 
-    public void updateSupplier(String companyName, String name, String surname, String address, String product, String email, Long contactNumber, Long price, Long quantity) {
+    public void updateSupplier(
+            String companyName,
+            String name,
+            String surname,
+            String bankName,
+            String bankHolderName,
+            Long branchCode,
+            Long accountNumber,
+            String address,
+            String product,
+            String email,
+            Long contactNumber,
+            Long price,
+            Long quantity) {
+
         supplierRepository.updateSupplier(
                 companyName,
                 name,
                 surname,
+                bankName,
+                bankHolderName,
+                branchCode,
+                accountNumber,
                 address,
                 product,
                 email,

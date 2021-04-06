@@ -36,17 +36,21 @@ public class SupplierController {
         supplierService.addNewSupplier(supplier);
     }
 
-    @DeleteMapping(path = "{companyName}")
+    @DeleteMapping(path = "delete/{companyName}")
     public void deleteSupplier(
             @PathVariable("companyName") String companyName) {
         supplierService.deleteSupplier(companyName);
     }
 
-    @PutMapping(path = "{companyName}")
+    @PutMapping(path = "update/{companyName}")
     public void updateSupplier(
             @PathVariable("companyName") String companyName,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String surname,
+            @RequestParam(required = false) String bankName,
+            @RequestParam(required = false) String bankHolderName,
+            @RequestParam(required = false) Long branchCode,
+            @RequestParam(required = false) Long accountNumber,
             @RequestParam(required = false) String address,
             @RequestParam(required = false) String product,
             @RequestParam(required = false) String email,
@@ -57,6 +61,10 @@ public class SupplierController {
                 companyName,
                 name,
                 surname,
+                bankName,
+                bankHolderName,
+                branchCode,
+                accountNumber,
                 address,
                 product,
                 email,

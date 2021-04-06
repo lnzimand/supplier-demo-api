@@ -4,24 +4,16 @@ public class Supplier {
 
     private String name;
     private String surname;
-    private String companyName;
-    private String address;
-    private String product;
-    private String email;
-    private Long contactNumber;
-    private Long price;
-    private Long quantity;
+    private SupplierBankDetails bankDetails;
+    private SupplierContactDetails contactDetails;
+    private SupplierCompanyDetails companyDetails;
 
-    public Supplier(String name, String surname, String companyName, String address, String product, String email, Long contactNumber, Long price, Long quantity) {
+    public Supplier(String name, String surname, String bankName, String bankHolderName, Long branchCode, Long accountNumber, String companyName, String address, String product, String email, Long contactNumber, Long price, Long quantity) {
         this.name = name;
         this.surname = surname;
-        this.companyName = companyName;
-        this.address = address;
-        this.product = product;
-        this.email = email;
-        this.contactNumber = contactNumber;
-        this.price = price;
-        this.quantity = quantity;
+        this.bankDetails = new SupplierBankDetails(bankName, bankHolderName, branchCode, accountNumber);
+        this.contactDetails = new SupplierContactDetails(email, contactNumber);
+        this.companyDetails = new SupplierCompanyDetails(companyName, address, product, price, quantity);
     }
 
     public String getName() {
@@ -40,73 +32,27 @@ public class Supplier {
         this.surname = surname;
     }
 
-    public String getAddress() {
-        return address;
+    public SupplierBankDetails getBankDetails() {
+        return bankDetails;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBankDetails(SupplierBankDetails bankDetails) {
+        this.bankDetails = bankDetails;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public SupplierContactDetails getContactDetails() {
+        return contactDetails;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setContactDetails(SupplierContactDetails contactDetails) {
+        this.contactDetails = contactDetails;
     }
 
-    public String getProduct() {
-        return product;
+    public SupplierCompanyDetails getCompanyDetails() {
+        return companyDetails;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(Long contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "Supplier{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", address='" + address + '\'' +
-                ", product='" + product + '\'' +
-                ", email='" + email + '\'' +
-                ", contactNumber=" + contactNumber +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
+    public void setCompanyDetails(SupplierCompanyDetails companyDetails) {
+        this.companyDetails = companyDetails;
     }
 }
