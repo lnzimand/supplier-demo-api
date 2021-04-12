@@ -1,17 +1,49 @@
-package com.example.SupplierDemoAPI.supplier;
+package com.example.SupplierDemoAPI.domian.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "bank_details")
 public class SupplierBankDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "supplier_id")
+    private Long id;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "supplier_id")
+    @JsonIgnore
+    private Supplier supplier;
+
+    @Column(name = "bank_name")
     private String bankName;
+
+    @Column(name = "bank_holder_name")
     private String bankHolderName;
+
+    @Column(name = "branch_code")
     private Long branchCode;
+
+    @Column(name = "account_number")
     private Long accountNumber;
 
-    public SupplierBankDetails(String bankName, String bankHolderName, Long branchCode, Long accountNumber) {
-        this.bankName = bankName;
-        this.bankHolderName = bankHolderName;
-        this.branchCode = branchCode;
-        this.accountNumber = accountNumber;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public String getBankName() {

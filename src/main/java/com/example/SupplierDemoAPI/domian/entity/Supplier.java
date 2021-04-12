@@ -1,19 +1,61 @@
-package com.example.SupplierDemoAPI.supplier;
+package com.example.SupplierDemoAPI.domian.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "supplier")
 public class Supplier {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private Long id;
+
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String name;
+
+    @Column(
+            name = "surname",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String surname;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            mappedBy = "supplier",
+            optional = false
+    )
     private SupplierBankDetails bankDetails;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            mappedBy = "supplier",
+            optional = false
+    )
     private SupplierContactDetails contactDetails;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            mappedBy = "supplier",
+            optional = false
+    )
     private SupplierCompanyDetails companyDetails;
 
-    public Supplier(String name, String surname, String bankName, String bankHolderName, Long branchCode, Long accountNumber, String companyName, String address, String product, String email, Long contactNumber, Long price, Long quantity) {
-        this.name = name;
-        this.surname = surname;
-        this.bankDetails = new SupplierBankDetails(bankName, bankHolderName, branchCode, accountNumber);
-        this.contactDetails = new SupplierContactDetails(email, contactNumber);
-        this.companyDetails = new SupplierCompanyDetails(companyName, address, product, price, quantity);
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,4 +97,5 @@ public class Supplier {
     public void setCompanyDetails(SupplierCompanyDetails companyDetails) {
         this.companyDetails = companyDetails;
     }
+
 }

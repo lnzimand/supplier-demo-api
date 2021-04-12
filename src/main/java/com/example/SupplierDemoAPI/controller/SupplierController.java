@@ -1,5 +1,7 @@
-package com.example.SupplierDemoAPI.supplier;
+package com.example.SupplierDemoAPI.controller;
 
+import com.example.SupplierDemoAPI.services.SupplierService;
+import com.example.SupplierDemoAPI.domian.entity.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,30 +23,28 @@ public class SupplierController {
         return supplierService.getSuppliers();
     }
 
-    @GetMapping(path = "{companyName}")
-    public Supplier getSupplier(@PathVariable("companyName") String companyName) {
-        return supplierService.getSupplier(companyName);
-    }
-
-    @GetMapping(path = "search/{searchName}")
-    public List<Supplier> search(@PathVariable("searchName") String searchVariable) {
-        return supplierService.search(searchVariable);
+    @GetMapping(path = "{companyId}")
+    public Supplier getSupplier(@PathVariable("companyId") Long companyId) {
+        return supplierService.getSupplier(companyId);
     }
 
     @PostMapping(path = "register")
-    public void registerNewStudent(@RequestBody Supplier supplier) {
+    public void registerNewSupplier(@RequestBody Supplier supplier) {
+
+        System.out.println(supplier.toString());
         supplierService.addNewSupplier(supplier);
     }
 
-    @DeleteMapping(path = "delete/{companyName}")
+    @DeleteMapping(path = "delete/{companyId}")
     public void deleteSupplier(
-            @PathVariable("companyName") String companyName) {
-        supplierService.deleteSupplier(companyName);
+            @PathVariable("companyId") Long companyId) {
+        supplierService.deleteSupplier(companyId);
     }
 
-    @PutMapping(path = "update/{companyName}")
+    @PutMapping(path = "update/{companyId}")
     public void updateSupplier(
-            @PathVariable("companyName") String companyName,
+            @PathVariable("companyId") Long companyId,
+            @RequestParam(required = false) String companyName,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String surname,
             @RequestParam(required = false) String bankName,
@@ -58,6 +58,7 @@ public class SupplierController {
             @RequestParam(required = false) Long price,
             @RequestParam(required = false) Long quantity) {
         supplierService.updateSupplier(
+                companyId,
                 companyName,
                 name,
                 surname,
