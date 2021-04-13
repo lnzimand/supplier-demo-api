@@ -30,8 +30,6 @@ public class SupplierController {
 
     @PostMapping(path = "register")
     public void registerNewSupplier(@RequestBody Supplier supplier) {
-
-        System.out.println(supplier.toString());
         supplierService.addNewSupplier(supplier);
     }
 
