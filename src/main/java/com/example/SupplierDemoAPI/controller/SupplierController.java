@@ -28,6 +28,11 @@ public class SupplierController {
         return supplierService.getSupplier(companyId);
     }
 
+    @GetMapping(path = "search/{name}")
+    public Supplier getSupplierByName(@PathVariable("name") String name) {
+        return supplierService.getSupplierByName(name);
+    }
+
     @PostMapping(path = "register")
     public void registerNewSupplier(@RequestBody Supplier supplier) {
         supplierService.addNewSupplier(supplier);

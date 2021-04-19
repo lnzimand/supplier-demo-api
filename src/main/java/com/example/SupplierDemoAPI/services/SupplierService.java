@@ -27,18 +27,18 @@ public class SupplierService {
         supplierRepository.save(supplier);
     }
 
-    public void deleteSupplier(Long companyId) {
-        if (!supplierRepository.existsById(companyId)) {
+    public void deleteSupplier(Long supplierId) {
+        if (!supplierRepository.existsById(supplierId)) {
             throw new IllegalStateException(
-                    "Supplier with id: " + companyId + " does not exists"
+                    "Supplier with id: " + supplierId + " does not exists"
             );
         }
-        supplierRepository.deleteById(companyId);
+        supplierRepository.deleteById(supplierId);
     }
 
     @Transactional
     public void updateSupplier(
-            Long companyId,
+            Long supplierId,
             String companyName,
             String name,
             String surname,
@@ -53,9 +53,9 @@ public class SupplierService {
             Long price,
             Long quantity) {
 
-        Supplier supplier = supplierRepository.findById(companyId)
+        Supplier supplier = supplierRepository.findById(supplierId)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Student with id: " + companyId + " does not exists"
+                        "Student with id: " + supplierId + " does not exists"
                 ));
 
         if (name != null && name.length() > 0 && !Objects.equals(supplier.getName(), name))
@@ -86,10 +86,17 @@ public class SupplierService {
             supplier.getCompanyDetails().setQuantity(quantity);
     }
 
-    public Supplier getSupplier(Long companyId) {
-        return supplierRepository.findById(companyId)
+    public Supplier getSupplier(Long supplierId) {
+        return supplierRepository.findById(supplierId)
                 .orElseThrow(() -> new IllegalStateException(
-                    "Supplier with an id: " + companyId + " does not exists"
+                    "Supplier with an id: " + supplierId + " does not exists"
+                ));
+    }
+
+    public Supplier getSupplierByName(String name) {
+        return supplierRepository.findSupplierByName(name)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Supplier with a name: " + name + " does not exists"
                 ));
     }
 }

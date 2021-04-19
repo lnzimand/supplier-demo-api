@@ -13,4 +13,9 @@ import java.util.Optional;
 
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
+    @Query("SELECT s FROM Supplier s WHERE s.name = ?1")
+    Optional<Supplier> findSupplierByName(String name);
+
+    @Query("SELECT CASE WHEN COUNT(s)> 0 THEN true ELSE false END FROM Supplier s WHERE lower(s.name) LIKE lower(:name)")
+    boolean supplierExistsByName(String name);
 }

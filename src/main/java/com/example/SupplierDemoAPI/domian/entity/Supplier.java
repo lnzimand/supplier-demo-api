@@ -2,6 +2,8 @@ package com.example.SupplierDemoAPI.domian.entity;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity
 @Table(name = "supplier")
 public class Supplier {
